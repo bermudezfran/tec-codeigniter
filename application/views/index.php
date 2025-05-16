@@ -6,6 +6,17 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Trinchera en CABA</title>
 
+    <!-- Google analytics -->
+     <?php if (ENVIRONMENT === 'production'): ?>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NE0BYY9ZRD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-NE0BYY9ZRD');
+  </script>
+<?php endif; ?>
+
     <!-- SEO Meta Tags -->
     <meta name="description" content="Trinchera en CABA es un espacio de encuentro para músicos, productores y amantes del folklore. Conoce las peñas, recitales y festivales destacados en Buenos Aires y alrededores.">
     <meta name="keywords" content="folklore, peñas, música, eventos en CABA, recitales, festivales, Buenos Aires, música tradicional, artistas autogestivos">
@@ -455,6 +466,14 @@
 
     <!-- Main JS File -->
     <script src="<?= JS_URL ?>main.js"></script>
+
+    <!-- glithbox --> 
+     <script src="<?= base_url('assets/vendor/glightbox/glightbox.min.js') ?>"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    GLightbox({ selector: '.glightbox', openEffect:'zoom', closeEffect:'fade' });
+  });
+</script>
 
 </body>
 

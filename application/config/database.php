@@ -75,13 +75,14 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'u356923972_trinche',
-	'password' => 'Penia123.',
-	'database' => 'u356923972_trinchera',
+	'hostname' => '127.0.0.1',
+	'username' => 'trinchera',
+	'password' => 'secretpass',
+	'database' => 'trinchera',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
+	'port'      => '3307',
 	'db_debug' => (ENVIRONMENT !== 'production'),
 	'cache_on' => FALSE,
 	'cachedir' => '',

@@ -97,6 +97,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>Orden</th>
                     <th>Nombre</th>
                     <th>Fecha</th>
                     <th>Hora</th>
@@ -117,6 +118,16 @@
                     </tr>
                     <?php foreach ($events as $event): ?>
                         <tr>
+                            <td>
+                                <input
+                                    type="number"
+                                    class="order-input"
+                                    data-id="<?= $event['id'] ?>"
+                                    value="<?= $event['display_order'] ?>"
+                                    min="0"
+                                    style="width: 3rem; text-align: center;"
+                                >
+                            </td>
                             <td><?= esc($event['name']) ?></td>
                             <td><?= $event['event_date']; ?></td>
                             <td><?= $event['time'] ?? 'No especificado' ?></td>
@@ -151,5 +162,29 @@
             </tbody>
         </table>
     </div>
+    <script>
+document.querySelectorAll('.order-input').forEach(input => {
+  input.addEventListener('change', e => {
+    const id    = e.target.dataset.id;
+    const order = e.target.value;
+    fetch('<?= base_url("events/update_order") ?>', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      body: JSON.stringify({ id, display_order: order })
+    })
+    .then(res => res.json())
+    .then(json => {
+      if (!json.success) {
+        alert('Error al actualizar orden: ' + (json.error||'desconocido'));
+      }
+    })
+    .catch(() => alert('Error de red al actualizar orden'));
+  });
+});
+</script>
+
 </body>
 </html>

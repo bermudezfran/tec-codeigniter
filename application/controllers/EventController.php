@@ -165,4 +165,18 @@ class EventController extends CI_Controller
         $this->EventModel->deleteEvent($id);
         redirect('events');
     }
+    public function update_order()
+{
+    // Leer JSON del cuerpo
+    $input = json_decode($this->input->raw_input_stream, true);
+    if (isset($input['id'], $input['display_order'])) {
+        $this->Event_model->update($input['id'], [
+            'display_order' => (int)$input['display_order']
+        ]);
+        echo json_encode(['success' => true]);
+        return;
+    }
+    echo json_encode(['success' => false, 'error' => 'Faltan parámetros']);
+}
+
 }
