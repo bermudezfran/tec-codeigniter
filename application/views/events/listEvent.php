@@ -114,25 +114,40 @@
             <tbody>
                 <?php foreach ($eventsByMonth as $month => $events): ?>
                     <tr>
-                        <th colspan="12">Eventos en <?= date('F Y', strtotime($month . '-01')) ?></th>
+                        <th colspan="12">
+                            Eventos en <?= date('F Y', strtotime($month . '-01')) ?>
+                        </th>
                     </tr>
                     <?php foreach ($events as $event): ?>
                         <tr>
+                            <!-- Celda Orden -->
                             <td>
                                 <input
                                     type="number"
                                     class="order-input"
                                     data-id="<?= $event['id'] ?>"
-                                    value="<?= $event['display_order'] ?>"
+                                    value="<?= isset($event['display_order']) ? $event['display_order'] : 0 ?>"
                                     min="0"
                                     style="width: 3rem; text-align: center;"
                                 >
                             </td>
+                            <!-- Nombre -->
                             <td><?= esc($event['name']) ?></td>
-                            <td><?= $event['event_date']; ?></td>
-                            <td><?= $event['time'] ?? 'No especificado' ?></td>
+                            <!-- Fecha -->
+                            <td><?= esc($event['event_date']) ?></td>
+                            <!-- Hora -->
+                            <td><?= !empty($event['time']) ? esc($event['time']) : 'No especificado' ?></td>
+                            <!-- Descripción -->
                             <td><?= esc($event['description']) ?></td>
-                            <td><img src="<?= esc($event['image_url']) ?>" alt="Imagen del evento"></td>
+                            <!-- Imagen -->
+                            <td>
+                                <?php if (!empty($event['image_url'])): ?>
+                                    <img src="<?= esc($event['image_url']) ?>" alt="Evento <?= esc($event['name']) ?>">
+                                <?php else: ?>
+                                    N/A
+                                <?php endif; ?>
+                            </td>
+                            <!-- Facebook -->
                             <td>
                                 <?php if (!empty($event['facebook_url'])): ?>
                                     <a href="<?= esc($event['facebook_url']) ?>" target="_blank">Facebook</a>
@@ -140,6 +155,7 @@
                                     No disponible
                                 <?php endif; ?>
                             </td>
+                            <!-- Instagram -->
                             <td>
                                 <?php if (!empty($event['instagram_url'])): ?>
                                     <a href="<?= esc($event['instagram_url']) ?>" target="_blank">Instagram</a>
@@ -147,12 +163,18 @@
                                     No disponible
                                 <?php endif; ?>
                             </td>
-                            <td><?= esc($event['info_event']) ?? 'No disponible' ?></td>
+                            <!-- Info Evento -->
+                            <td><?= !empty($event['info_event']) ? esc($event['info_event']) : 'No disponible' ?></td>
+                            <!-- Destacado -->
                             <td><?= $event['is_featured'] ? 'Sí' : 'No' ?></td>
+                            <!-- Ubicación -->
                             <td><?= esc($event['location']) ?></td>
+                            <!-- Acciones -->
                             <td>
                                 <a href="<?= base_url('events/edit/' . $event['id']) ?>">Editar</a>
-                                <form action="<?= base_url('events/delete/' . $event['id']) ?>" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este evento? Si confirma no podrá recuperarlo.')">
+                                <form action="<?= base_url('events/delete/' . $event['id']) ?>"
+                                      method="POST" style="display:inline;"
+                                      onsubmit="return confirm('¿Eliminar este evento? Esta acción no se puede deshacer.')">
                                     <button type="submit">Eliminar</button>
                                 </form>
                             </td>
@@ -162,29 +184,30 @@
             </tbody>
         </table>
     </div>
-    <script>
-document.querySelectorAll('.order-input').forEach(input => {
-  input.addEventListener('change', e => {
-    const id    = e.target.dataset.id;
-    const order = e.target.value;
-    fetch('<?= base_url("events/update_order") ?>', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest'
-      },
-      body: JSON.stringify({ id, display_order: order })
-    })
-    .then(res => res.json())
-    .then(json => {
-      if (!json.success) {
-        alert('Error al actualizar orden: ' + (json.error||'desconocido'));
-      }
-    })
-    .catch(() => alert('Error de red al actualizar orden'));
-  });
-});
-</script>
 
+    <!-- Script AJAX para actualizar orden -->
+    <script>
+    document.querySelectorAll('.order-input').forEach(input => {
+      input.addEventListener('change', e => {
+        const id    = e.target.dataset.id;
+        const order = e.target.value;
+        fetch('<?= base_url("events/update_order") ?>', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: JSON.stringify({ id, display_order: order })
+        })
+        .then(res => res.json())
+        .then(json => {
+          if (!json.success) {
+            alert('Error al actualizar orden: ' + (json.error || 'desconocido'));
+          }
+        })
+        .catch(() => alert('Error de red al actualizar orden'));
+      });
+    });
+    </script>
 </body>
 </html>
