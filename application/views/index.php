@@ -184,7 +184,9 @@
                 <?php foreach ($featuredEvents as $event): ?>
                     <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="member">
-                            <img src="<?= $event['image_url']; ?>" class="img-fluid" alt="<?= $event['name']; ?>">
+                            <a href="<?= $event->image_url ?>" class="glightbox" data-gallery="destacados" title="Ver afiche completo">
+                                <img src="<?= $event['image_url']; ?>" class="img-fluid" alt="<?= $event['name']; ?>">
+                            </a>
                             <div class="member-info">
                                 <div class="member-info-content">
                                     <h4><a><?= $event['name']; ?></a></h4>
@@ -275,6 +277,14 @@
 												<i class="bi bi-instagram"></i>
 											</a>
 										<?php endif; ?>
+                                         <!-- Miniatura del afiche -->
+  <a href="<?= $e->image_url ?>" class="glightbox ms-2" title="Ver afiche completo">
+    <img
+      src="<?= $e->image_url ?>"
+      alt="Afiche de <?= $e->name ?>"
+      style="width:32px; height:auto; border-radius:4px;"
+    >
+  </a>
 									</h4>
 									<p><?= $event['info_event']; ?></p>
 								</div>
@@ -310,6 +320,14 @@
 													<i class="bi bi-instagram"></i>
 												</a>
 											<?php endif; ?>
+                                             <!-- Miniatura del afiche -->
+  <a href="<?= $e->image_url ?>" class="glightbox ms-2" title="Ver afiche completo">
+    <img
+      src="<?= $e->image_url ?>"
+      alt="Afiche de <?= $e->name ?>"
+      style="width:32px; height:auto; border-radius:4px;"
+    >
+  </a>
 										</h4>
 										<p><?= $event['info_event']; ?></p>
 									</div>
