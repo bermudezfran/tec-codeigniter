@@ -165,21 +165,56 @@ class EventController extends CI_Controller
         $this->EventModel->deleteEvent($id);
         redirect('events');
     }
-    public function update_order()
+    public function move_up($id)
 {
-    // Sólo AJAX/CLI opcional
-    $input = json_decode($this->input->raw_input_stream, true);
-    if (isset($input['id'], $input['display_order'])) {
-        // Usar el model correcto y su método
-        $this->EventModel->updateEvent(
-            $input['id'],
-            ['display_order' => (int)$input['display_order']]
-        );
-        echo json_encode(['success' => true]);
-        return;
+    // Solo vía POST
+    if ($this->input->method() !== 'post') {
+        show_404();
     }
-    echo json_encode(['success' => false, 'error' => 'Faltan parámetros']);
+
+    $current = $this->EventModel->getEventById($id);
+    if (! $current) show_404();
+
+    // Busca el anterior en el mismo grupo de is_featured
+    $prev = $this->db
+                 ->where('is_featured', $current['is_featured'])
+                 ->where('display_order <', $current['display_order'])
+                 ->order_by('display_order', 'DESC')
+                 ->get('events')
+                 ->row_array();
+
+    if ($prev) {
+        $this->EventModel->updateEvent($current['id'], ['display_order' => $prev['display_order']]);
+        $this->EventModel->updateEvent($prev['id'],    ['display_order' => $current['display_order']]);
+    }
+
+    redirect('events');
 }
+
+public function move_down($id)
+{
+    if ($this->input->method() !== 'post') {
+        show_404();
+    }
+
+    $current = $this->EventModel->getEventById($id);
+    if (! $current) show_404();
+
+    $next = $this->db
+                 ->where('is_featured', $current['is_featured'])
+                 ->where('display_order >', $current['display_order'])
+                 ->order_by('display_order', 'ASC')
+                 ->get('events')
+                 ->row_array();
+
+    if ($next) {
+        $this->EventModel->updateEvent($current['id'], ['display_order' => $next['display_order']]);
+        $this->EventModel->updateEvent($next['id'],    ['display_order' => $current['display_order']]);
+    }
+
+    redirect('events');
+}
+
 
 
 }

@@ -66,7 +66,12 @@ $route['events/store'] = 'EventController/store';          // POST: Guardar even
 $route['events/edit/(:num)'] = 'EventController/edit/$1';  // GET: Formulario de edición
 $route['events/update/(:num)'] = 'EventController/update/$1'; // POST: Actualizar evento
 $route['events/delete/(:num)'] = 'EventController/destroy/$1'; // POST: Eliminar evento
-$route['events/update_order'] = 'EventController/update_order';
+// Reordenamiento con flechas
+// Reordenamiento de eventos
+$route['events/move_up/(:num)']   = 'EventController/move_up/$1';
+$route['events/move_down/(:num)'] = 'EventController/move_down/$1';
+
+
 
 $route['auth/login'] = 'AuthController/login';
 $route['auth/logout'] = 'AuthController/logout';

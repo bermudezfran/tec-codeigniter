@@ -1044,6 +1044,28 @@ section,
   bottom: 0;
 }
 
+.flyer-thumb{
+  width:100%;
+  aspect-ratio:4/3;
+  object-fit:cover;
+  border-radius:0.75rem;
+  cursor:pointer;   
+}
+
+/* === Overrides GLightbox (siempre los últimos) =============== */
+
+/* Fondo semitransparente */
+.glightbox-container{
+  background:rgba(0,0,0,.85) !important;
+}
+
+/* Imagen mostrada */
+.gslide-image img,             /* v2 */
+.gslide__img{                  /* v3 */
+  border-radius:12px !important;
+  box-shadow:0 6px 24px rgba(0,0,0,.45) !important;
+}
+
 /*--------------------------------------------------------------
 # Schedule Section
 --------------------------------------------------------------*/
@@ -1063,6 +1085,20 @@ section,
   display: inline-block;
   margin-bottom: 0;
   margin: 2px;
+}
+
+.flyer-thumb-sm {
+  width: 40px;
+  height: 25px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform .2s;
+  vertical-align: middle;
+}
+
+.flyer-thumb-sm:hover {
+  transform: scale(1.1);
 }
 
 .schedule .nav-tabs a {
@@ -1750,6 +1786,26 @@ button.btn-filter:hover {
   color: color-mix(in srgb, var(--default-color), transparent 30%);
   font-size: 15px;
   margin-bottom: 10px;
+}
+
+/* Miniatura eventos comunes */
+.common-thumb .flyer-thumb-sm {
+  display: inline-block !important;
+  width: 32px !important;
+  height: 32px !important;
+  object-fit: cover !important;
+  border-radius: 4px !important;
+  vertical-align: middle !important;
+  cursor: pointer !important;
+  transition: transform .2s !important;
+}
+.common-thumb .flyer-thumb-sm:hover {
+  transform: scale(1.1) !important;
+}
+
+.container-h4 {
+  height: 40px !important;
+  width: 50% !important;
 }
 
 /*--------------------------------------------------------------

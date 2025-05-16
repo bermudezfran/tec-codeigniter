@@ -184,13 +184,21 @@
                 <?php foreach ($featuredEvents as $event): ?>
                     <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="member">
-                            <a href="<?= esc($event['image_url']) ?>" class="glightbox ms-2" title="Ver afiche completo">
-  <img
-    src="<?= esc($event['image_url']) ?>"
-    alt="Afiche de <?= esc($event['name']) ?>"
-    style="width:32px; height:auto; border-radius:4px;"
-  >
-</a>
+                            <a href="<?= esc($event['image_url']) ?>" class="glightbox" data-gallery='destacados' data-type='image'>
+                            <img
+                                src="<?= esc($event['image_url']) ?>"
+                                alt="Afiche de <?= esc($event['name']) ?>"
+                                class="flyer-thumb"
+                            >
+                            </a>
+                            <!-- <a 
+                                href="{{ $event->image_url }}" 
+                                class="glightbox" 
+                                data-gallery="destacados"
+                                data-type="image"       
+                                >
+                                    <img src="{{ $event->image_url }}" alt="{{ $event->name }}" class="flyer-thumb">
+                                </a> -->
                             <div class="member-info">
                                 <div class="member-info-content">
                                     <h4><a><?= $event['name']; ?></a></h4>
@@ -282,13 +290,20 @@
 											</a>
 										<?php endif; ?>
                                          <!-- Miniatura del afiche -->
-  <a href="<?= esc($event['image_url']) ?>" class="glightbox ms-2" title="Ver afiche completo">
-  <img
-    src="<?= esc($event['image_url']) ?>"
-    alt="Afiche de <?= esc($event['name']) ?>"
-    style="width:32px; height:auto; border-radius:4px;"
-  >
-</a>
+                                        <?php if (!empty($event['image_url'])): ?>
+                                            <a
+                                                href="<?= esc($event['image_url']) ?>"
+                                                class="glightbox"
+                                                data-gallery="common-events"
+                                                data-type="image"
+                                            >
+                                                <img
+                                                src="<?= esc($event['image_url']) ?>"
+                                                alt=""
+                                                style="width:32px; height:auto; border-radius:4px;"
+                                                >
+                                            </a>
+                                            <?php endif; ?>
 									</h4>
 									<p><?= $event['info_event']; ?></p>
 								</div>
@@ -325,13 +340,33 @@
 												</a>
 											<?php endif; ?>
                                              <!-- Miniatura del afiche -->
-  <a href="<?= esc($event['image_url']) ?>" class="glightbox ms-2" title="Ver afiche completo">
-  <img
-    src="<?= esc($event['image_url']) ?>"
-    alt="Afiche de <?= esc($event['name']) ?>"
-    style="width:32px; height:auto; border-radius:4px;"
+                                            <?php if (!empty($event['image_url'])): ?>
+                                                <!-- <a 
+                                                href="{{ $event->image_url }}" 
+                                                class="glightbox ms-2" 
+                                                data-gallery="common-events" 
+                                                data-type="image"
+                                                >
+                                                <img 
+                                                    src="{{ $event->image_url }}" 
+                                                    alt="Flyer {{ $event->name }}" 
+                                                    class="flyer-thumb-sm"
+                                                >
+                                                </a> -->
+  <a
+    href="<?= esc($event['image_url']) ?>"
+    class="glightbox"
+    data-gallery="common-events"
+    data-type="image"
   >
-</a>
+    <img
+      src="<?= esc($event['image_url']) ?>"
+      alt=""
+      style="width:32px; height:auto; border-radius:4px;"
+    >
+  </a>
+<?php endif; ?>
+
 										</h4>
 										<p><?= $event['info_event']; ?></p>
 									</div>
